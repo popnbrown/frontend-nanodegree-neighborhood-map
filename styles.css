@@ -1,0 +1,37 @@
+html, body {
+	height: 100%;
+}
+
+.list-wrapper {
+	background: #000;
+	height: 100%;
+	color: #fff;
+	padding: 0;
+}
+
+.map-wrapper {
+	height: 100%;
+}
+
+.list-wrapper .list-group-item {
+	border: none;
+	cursor: pointer;
+}
+
+.list-wrapper .station-list .list-group-item {
+	border-bottom: 1px grey solid;
+	background: none;
+}
+
+.list-wrapper .station-list .list-group-item:first-child {
+	border-top: 1px grey solid;
+}
+
+.station-name {
+	font-size: 20px;
+	display:block;
+}
+
+.station.active {
+	background: grey;
+}

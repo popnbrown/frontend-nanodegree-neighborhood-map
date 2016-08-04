@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chicago Fueling Stations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="col-xs-2 list-wrapper">
+		<ul class="list-group station-list" data-bind="foreach: stations">
+			<li class="list-group-item station" data-bind="style: { background: active() ? 'grey' : 'none' }, click: viewModel.selectStation">
+				<span class="station-name" data-bind="text: name"></span>
+				<span class="station-intersection" data-bind="text: intersection"></span>
+			</li>
+		</ul>
+	</div>
+	<div class="col-xs-10 map-wrapper" id="map-wrapper">Map View</div>
+
+
+
+	<!--Javascript-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+	<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="firstmap.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSJmFznGhGumuEr8EtV5NigkN6oRM9UUg&callback=initMap"></script>
+
+</body>
+</html>
