@@ -112,12 +112,12 @@ function initMap() {
 function stationListener(station) {
 	station.marker.addListener('click', function() {
 		toggleStation(station);
-	})
+	});
 
 	station.infoWindow.addListener('closeclick', function() {
 		station.active(false);
 		station.marker.setAnimation(null);
-	})
+	});
 }
 
 /**
@@ -149,13 +149,13 @@ function populateInfoWindow(name, intersection) {
 		url: "https://data.cityofchicago.org/resource/alternative-fuel-locations.json?intersection_directions=" + encodeURIComponent(intersection)
 	}).done(function(data) {
 
-		contentString += ' serves: <ul>'
+		contentString += ' serves: <ul>';
 
 		//loop through all data, and append to contentString
 		$.each(data, function(index) {
 			date = new Date(data[index].open_date); //use Date object to convert to string properly
 			contentString += '<li><b>' + data[index].fuel_type_code + '</b> - Installed ' + date.toDateString() + '</li>';
-		})
+		});
 
 		contentString += '</ul>';
 
@@ -196,10 +196,10 @@ var viewModel =  {
 			active: ko.observable(false),
 			display: ko.observable(true),
 			name: name,
-			intersection, intersection,
+			intersection: intersection,
 			marker: stationMarker,
 			infoWindow: stationInfoWindow
-		}
+		};
 
 		return station;
 	},
@@ -227,15 +227,7 @@ var viewModel =  {
 		}
 	},
 	toggleList: function() {
-		//this enables the hamburger to hide and show the list
-		if(this.showFilter()){
-			$('.list-wrapper').hide();
-			$('.map-wrapper').removeClass('col-xs-10');
-			this.showFilter(false);
-		} else {
-			$('.list-wrapper').show();
-			$('.map-wrapper').addClass('col-xs-10');
-			this.showFilter(true);
-		}
+		//changes showFilter to be opposite
+		this.showFilter(!this.showFilter());
 	}
 }
