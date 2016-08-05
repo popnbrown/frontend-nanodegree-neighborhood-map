@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
     <title>Chicago Fueling Stations with Alternative Fuels</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
@@ -9,13 +10,13 @@
 <body>
 		<div class="col-xs-2 list-wrapper">
 			<div class="filter">
-				<input placeholder="Filter by Intersection" type="text" data-bind="textInput: viewModel.textFilter"/>
+				<input placeholder="Filter by Intersection" type="text" data-bind="textInput: textFilter"/>
 				<button type="button" class="btn btn-default" data-bind="click: viewModel.filter">
 					<span class="glyphicon glyphicon-filter"></span>
 				</button>
 			</div>
 			<ul class="list-group station-list" data-bind="foreach: stations">
-				<li class="list-group-item station" data-bind="style: { display: display() ? 'block' : 'none', background: active() ? 'grey' : 'none' }, click: viewModel.selectStation">
+				<li class="list-group-item station" data-bind="style: { display: display() ? 'block' : 'none', background: active() ? 'grey' : 'none' }, click: $root.selectStation">
 					<span class="station-name" data-bind="text: name"></span>
 					<span class="station-intersection" data-bind="text: intersection"></span>
 				</li>
