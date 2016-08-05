@@ -52,6 +52,12 @@ function initMap() {
 		viewModel.stations.push(newStation);
 
 	}
+	google.maps.event.addDomListener(window, "resize", function() {
+		var center = map.getCenter();
+		google.maps.event.trigger(map, "resize");
+		map.setCenter(center);
+	});
+
 	ko.applyBindings(viewModel);
 }
 
@@ -67,17 +73,18 @@ function stationListener(station) {
 }
 
 function toggleStation(station) {
-	if(station.active())
-	{
+	if(station.active()){
 		station.active(false);
 		station.infoWindow.close();
 		station.marker.setAnimation(null);
-	} else {
+	}
+	else{
 		station.active(true);
 		station.infoWindow.open(map, station.marker);
 		station.marker.setAnimation(google.maps.Animation.BOUNCE);
 	}
 }
+
 function populateInfoWindow(name, intersection) {
 	//TO-DO hit chicago api for types of fuel
 	return new google.maps.InfoWindow({
@@ -85,8 +92,15 @@ function populateInfoWindow(name, intersection) {
 	});
 }
 
+// Alert user when Google Map fails to load
+function googleMapError() {
+	alert("Google Maps failed to load.  Please refresh the page to try again.");
+}
+
 var viewModel =  {
 	stations: ko.observableArray([]),
+	textFilter: ko.observable(""),
+	showFilter: ko.observable(true),
 	Station: function(name, intersection, lat, long) {
 		var self = this;
 
@@ -101,6 +115,7 @@ var viewModel =  {
 
 		var station = {
 			active: ko.observable(false),
+			display: ko.observable(true),
 			name: name,
 			intersection, intersection,
 			marker: stationMarker,
@@ -111,5 +126,33 @@ var viewModel =  {
 	},
 	selectStation: function(item) {
 		toggleStation(item);
+	},
+	filter: function() {
+		var text = viewModel.textFilter().toLowerCase().split(" ");
+		var intersectionList;
+		for (var i=0;i<viewModel.stations().length;i++){
+			intersectionList = viewModel.stations()[i].intersection.toLowerCase().split(" ");
+			for(var k=0;k<text.length;k++){
+				matchLoop: for(var j=0;j<intersectionList.length;j++) {
+					if(text[k] !== intersectionList[j])
+						viewModel.stations()[i].display(false);
+					else{
+						viewModel.stations()[i].display(true);
+						break matchLoop;
+					}
+				}
+			}
+		}
+	},
+	toggleList: function() {
+		if(this.showFilter()){
+			$('.list-wrapper').hide();
+			$('.map-wrapper').removeClass('col-xs-10');
+			this.showFilter(false);
+		} else {
+			$('.list-wrapper').show();
+			$('.map-wrapper').addClass('col-xs-10');
+			this.showFilter(true);
+		}
 	}
 }
