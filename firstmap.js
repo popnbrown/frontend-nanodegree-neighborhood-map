@@ -14,6 +14,18 @@ var stationsList = [
 			'long': '-87.6750237'
 		},
 		{
+			'name': 'City of Chicago FS#202',
+			'intersection': '63rd and Laramie',
+			'lat': '41.9992536',
+			'long': '-87.6750237'
+		},
+		{
+			'name': 'City of Chicago FS#205',
+			'intersection': 'Belmont & Western',
+			'lat': '41.9408093',
+			'long': '-87.6904015'
+		},
+		{
 			'name': 'City of Chicago FS#3',
 			'intersection': 'Ferdinand and Tripp',
 			'lat': '41.8893383',
@@ -36,7 +48,31 @@ var stationsList = [
 			'intersection': '101st and Stony Island',
 			'lat': '41.712605',
 			'long': '-87.58196'
-		}
+		},
+		{
+			'name': 'City of Chicago FS#7',
+			'intersection': "O'Hare Airport",
+			'lat': '41.9593847',
+			'long': '-87.8394486999999'
+		},
+		{
+			'name': 'City of Chicago FS#8',
+			'intersection': '104th and Vincennes',
+			'lat': '41.7040122',
+			'long': '-87.6570639'
+		},
+		{
+			'name': 'City of Chicago FS#9',
+			'intersection': '65th and State',
+			'lat': '41.776407',
+			'long': '-87.6262225999999'
+		},
+		{
+			'name': 'University of Illinois at Chicago',
+			'intersection': 'Roosevelt and Morgan',
+			'lat': '41.864057',
+			'long': '-87.6506388'
+		},
 ];
 
 function initMap() {
@@ -110,7 +146,7 @@ function populateInfoWindow(name, intersection) {
 	var infoWindow = new google.maps.InfoWindow({content: contentString}); //create infowindow and send to KO, ajax will fill later
 
 	$.ajax({
-		url: "https://data.cityofchicago.org/resource/alternative-fuel-locations.json?intersection_directions=" + intersection
+		url: "https://data.cityofchicago.org/resource/alternative-fuel-locations.json?intersection_directions=" + encodeURIComponent(intersection)
 	}).done(function(data) {
 
 		contentString += ' serves: <ul>'
@@ -118,7 +154,7 @@ function populateInfoWindow(name, intersection) {
 		//loop through all data, and append to contentString
 		$.each(data, function(index) {
 			date = new Date(data[index].open_date); //use Date object to convert to string properly
-			contentString += '<li><b>' + data[index].fuel_type_code + '</b> - Opened ' + date.toDateString() + '</li>';
+			contentString += '<li><b>' + data[index].fuel_type_code + '</b> - Installed ' + date.toDateString() + '</li>';
 		})
 
 		contentString += '</ul>';
