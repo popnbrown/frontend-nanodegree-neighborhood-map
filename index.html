@@ -10,10 +10,7 @@
 <body>
 		<div class="col-xs-2 list-wrapper">
 			<div class="filter">
-				<input placeholder="Filter by Intersection" type="text" data-bind="textInput: textFilter"/>
-				<button type="button" class="btn btn-default" data-bind="click: viewModel.filter">
-					<span class="glyphicon glyphicon-filter"></span>
-				</button>
+				<input placeholder="Filter by Intersection" type="text" data-bind="event: {keyup: filter}, textInput: textFilter"/>
 			</div>
 			<ul class="list-group station-list" data-bind="foreach: stations">
 				<li class="list-group-item station" data-bind="style: { display: display() ? 'block' : 'none', background: active() ? 'grey' : 'none' }, click: $root.selectStation">

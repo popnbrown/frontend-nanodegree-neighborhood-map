@@ -208,23 +208,20 @@ var viewModel =  {
 	},
 	filter: function() {
 		var text = viewModel.textFilter().toLowerCase().split(" "); //split filter text by spaces to allow for more matches
-		var intersectionList;
+		var intersection;
 
 		for (var i=0;i<viewModel.stations().length;i++){
-			//split up intersection by spaces to allow for more matches
-			intersectionList = viewModel.stations()[i].intersection.toLowerCase().split(" ");
+			//get the intersection value
+			intersection = viewModel.stations()[i].intersection.toLowerCase();
 
 			for(var k=0;k<text.length;k++){
-
-				matchLoop: for(var j=0;j<intersectionList.length;j++) {
-					//if no match then remove station from list
-					if(text[k] !== intersectionList[j])
-						viewModel.stations()[i].display(false);
-					else{
-						viewModel.stations()[i].display(true);
-						break matchLoop;
-					}
-
+				//if intersection contains any of the textfilter
+				if(intersection.indexOf(text[k]) > -1){
+					viewModel.stations()[i].display(true);
+					viewModel.stations()[i].marker.setVisible(true);
+				} else {
+					viewModel.stations()[i].display(false);
+					viewModel.stations()[i].marker.setVisible(false);
 				}
 			}
 		}
